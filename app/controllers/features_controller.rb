@@ -4,6 +4,24 @@ class FeaturesController < ApplicationController
   # GET /features or /features.json
   def index
     @features = Feature.all
+    @cities = ['glasgow', 'edinburgh', 'dundee']
+
+    @base_url = "https://www.itison.com/api/110"
+
+    if params[:city].nil? || params[:city].empty?
+      # show glasgow features by default
+      @place_id = 'glasgow'
+    else
+      @place_id = params[:city]
+    end
+
+    @type = 'deals'
+    @category_id = ''
+    @page = '0'
+
+    @response = JSON.parse(Faraday.get(@base_url + "/" + @place_id + "/" + @type).body)
+                   .select { |feature| feature["deal"]&.[]("short_title") }
+                   .map    { |feature| [feature["deal"]&.[]("short_title"), feature["deal"]&.[]("price").to_s] }
   end
 
   # GET /features/1 or /features/1.json

@@ -12,3 +12,18 @@
 </div>
 
 <%= link_to "New feature", new_feature_path %>
+
+<%= form_with url: "/features", method: :get do |form| %>
+
+  <%= form.select(:city, @cities, { prompt: 'choose city' }) %>
+
+  <%= form.submit "Search" %>
+<% end %>
+
+<h2>Results</h2>
+
+<% @response.each do |feature| %>
+  <p><%= feature.first %></p>
+  <p><%= feature.last %></p>
+  <br>
+<% end %>
