@@ -20,8 +20,6 @@ class FeaturesController < ApplicationController
     @page = '0'
 
     @response = JSON.parse(Faraday.get(@base_url + "/" + @place_id + "/" + @type).body)
-                   .select { |feature| feature["deal"]&.[]("short_title") }
-                   .map    { |feature| [feature["deal"]&.[]("short_title"), feature["deal"]&.[]("price").to_s] }
   end
 
   # GET /features/1 or /features/1.json

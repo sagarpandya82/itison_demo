@@ -23,7 +23,8 @@
 <h2>Results</h2>
 
 <% @response.each do |feature| %>
-  <p><%= feature.first %></p>
-  <p><%= feature.last %></p>
+  <p>product_data_id: <%= feature['deal']&.[]('product_data_id') %></p>
+  <p>short_title: <%= feature["deal"]&.[]("short_title") %></p>
+  <p>price: <%= feature["deal"]&.[]("price").to_s %></p>
   <br>
 <% end %>
